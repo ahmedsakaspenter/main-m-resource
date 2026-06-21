@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+  <title>乐鱼体育 – 运动数据与赛事服务</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #f4f9fc;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      color: #1c2e36;
+      line-height: 1.6;
+      padding: 20px 16px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .container {
+      max-width: 1120px;
+      width: 100%;
+    }
+
+    /* 主视觉区域 — 卡片式大标题 */
+    .hero-card {
+      background: linear-gradient(145deg, #eafff1 0%, #d0efe8 100%);
+      border-radius: 32px;
+      padding: 2.5rem 2rem;
+      margin-bottom: 2.5rem;
+      box-shadow: 0 8px 24px rgba(0, 100, 80, 0.08);
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .hero-tag {
+      background: rgba(0, 140, 120, 0.12);
+      color: #007a66;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+      padding: 4px 14px;
+      border-radius: 40px;
+      display: inline-block;
+      width: fit-content;
+      backdrop-filter: blur(2px);
+    }
+
+    .hero-card h1 {
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: #0d3b3b;
+      letter-spacing: -0.3px;
+      line-height: 1.2;
+      margin: 0.2rem 0 0.25rem;
+    }
+
+    .hero-card p {
+      font-size: 1.05rem;
+      color: #2b5a55;
+      max-width: 600px;
+    }
+
+    .hero-highlight {
+      background: #0f766e;
+      color: white;
+      border-radius: 40px;
+      padding: 0.25rem 1rem;
+      font-weight: 500;
+      display: inline-block;
+      margin-top: 0.5rem;
+    }
+
+    /* 网格卡片布局 */
+    .grid-3 {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.6rem;
+      margin: 2.2rem 0 2.8rem;
+    }
+
+    @media (min-width: 600px) {
+      .grid-3 {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (min-width: 900px) {
+      .grid-3 {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    .card {
+      background: #ffffff;
+      border-radius: 28px;
+      padding: 1.8rem 1.5rem 1.5rem;
+      box-shadow: 0 6px 16px rgba(20, 100, 90, 0.06);
+      transition: transform 0.15s ease, box-shadow 0.2s;
+      border: 1px solid rgba(0, 140, 115, 0.08);
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 28px rgba(20, 130, 110, 0.10);
+    }
+
+    .card-icon {
+      background: #d3f0ea;
+      width: 48px;
+      height: 48px;
+      border-radius: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.6rem;
+      margin-bottom: 1rem;
+      color: #0b6b5e;
+    }
+
+    .card h3 {
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: #134542;
+      margin-bottom: 0.5rem;
+      letter-spacing: -0.2px;
+    }
+
+    .card p {
+      font-size: 0.95rem;
+      color: #2c4f4a;
+    }
+
+    .card ul {
+      list-style: none;
+      padding: 0;
+      margin-top: 0.5rem;
+    }
+
+    .card li {
+      font-size: 0.9rem;
+      padding: 0.25rem 0;
+      color: #32655c;
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+    }
+
+    .card li::before {
+      content: "▹";
+      color: #019f84;
+      font-weight: 600;
+    }
+
+    .badge-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 0.8rem;
+    }
+
+    .badge {
+      background: #e3f3ef;
+      color: #1d6458;
+      font-size: 0.75rem;
+      font-weight: 500;
+      padding: 0.2rem 0.9rem;
+      border-radius: 40px;
+      border: 1px solid rgba(0, 150, 120, 0.1);
+    }
+
+    /* 适合人群区域——单独卡片组 */
+    .audience-section {
+      margin: 2.8rem 0 2.2rem;
+    }
+
+    .section-label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 1.2rem;
+    }
+
+    .section-label span {
+      background: #0f766e;
+      width: 6px;
+      height: 24px;
+      border-radius: 6px;
+    }
+
+    .section-label h2 {
+      font-size: 1.6rem;
+      font-weight: 600;
+      color: #063f3a;
+      letter-spacing: -0.3px;
+    }
+
+    .audience-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 1rem;
+    }
+
+    .audience-item {
+      background: white;
+      border-radius: 20px;
+      padding: 1.2rem 1rem 0.9rem;
+      border: 1px solid rgba(0, 130, 105, 0.06);
+      box-shadow: 0 2px 10px rgba(0, 70, 60, 0.03);
+    }
+
+    .audience-item h4 {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #155349;
+      margin-bottom: 0.2rem;
+    }
+
+    .audience-item p {
+      font-size: 0.85rem;
+      color: #406a60;
+    }
+
+    /* 自然链接段落 */
+    .link-block {
+      background: #ecf7f4;
+      border-radius: 28px;
+      padding: 1.8rem 2rem;
+      margin: 2.8rem 0 2rem;
+      border-left: 6px solid #019f84;
+    }
+
+    .link-block p {
+      font-size: 1rem;
+      color: #1a453f;
+      max-width: 700px;
+    }
+
+    .link-block a {
+      color: #017a66;
+      font-weight: 600;
+      text-decoration: none;
+      border-bottom: 2px solid rgba(1, 159, 132, 0.3);
+      transition: border-color 0.15s;
+    }
+
+    .link-block a:hover {
+      border-bottom-color: #017a66;
+    }
+
+    /* FAQ 摘要 */
+    .faq-mini {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+      margin: 2rem 0 2.5rem;
+    }
+
+    @media (min-width: 640px) {
+      .faq-mini {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .faq-item {
+      background: white;
+      border-radius: 20px;
+      padding: 1.2rem 1.4rem;
+      border: 1px solid #dfefe9;
+    }
+
+    .faq-item strong {
+      color: #0b5f52;
+      font-weight: 600;
+      display: block;
+      margin-bottom: 0.2rem;
+      font-size: 0.95rem;
+    }
+
+    .faq-item p {
+      font-size: 0.88rem;
+      color: #3f685f;
+    }
+
+    /* 页脚 */
+    .footer-note {
+      font-size: 0.8rem;
+      color: #5b8077;
+      text-align: center;
+      padding: 2.2rem 0 0.8rem;
+      border-top: 1px solid #cfe3dc;
+      margin-top: 2rem;
+    }
+
+    /* 移动端微调 */
+    @media (max-width: 480px) {
+      .hero-card h1 {
+        font-size: 1.8rem;
+      }
+      .hero-card {
+        padding: 2rem 1.2rem;
+      }
+      .card {
+        padding: 1.4rem 1.2rem;
+      }
+      .link-block {
+        padding: 1.4rem 1.2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <!-- 主视觉卡片 -->
+  <div class="hero-card">
+    <div class="hero-tag">快速识别 · 体育信息服务</div>
+    <h1>乐鱼体育<br>赛事数据·场馆·动态</h1>
+    <p>为运动爱好者和行业用户提供赛事资讯、场馆信息与训练记录工具。一个平台，聚合多种运动场景。</p>
+    <div class="hero-highlight">🏀 覆盖 12+ 运动类别</div>
+  </div>
+
+  <!-- 用途卡片（三张） 信息密度稍高 -->
+  <div class="grid-3">
+    <div class="card">
+      <div class="card-icon">📊</div>
+      <h3>数据看板</h3>
+      <p>赛事比分、球员统计、赛季趋势。基于公开数据整理，辅助训练与观赛分析。</p>
+      <ul>
+        <li>实时比分与历史对比</li>
+        <li>运动项目自定义筛选</li>
+        <li>图表化赛季走向</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-icon">🏟️</div>
+      <h3>场馆与活动</h3>
+      <p>查找附近体育场馆、开放时段、社群约战。支持俱乐部发布日常训练信息。</p>
+      <ul>
+        <li>地图模式与设施标注</li>
+        <li>训练营/公开课日历</li>
+        <li>用户评分与实拍图</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-icon">📋</div>
+      <h3>运动记录</h3>
+      <p>个人/团队运动日志：里程、时长、卡路里估算。轻量级数据同步，无需复杂设备。</p>
+      <ul>
+        <li>手动录入与标签分类</li>
+        <li>周/月/自定义周期</li>
+        <li>趋势简报生成</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 适合人群 区块 -->
+  <div class="audience-section">
+    <div class="section-label">
+      <span></span>
+      <h2>适合哪些人</h2>
+    </div>
+    <div class="audience-grid">
+      <div class="audience-item">
+        <h4>业余运动员</h4>
+        <p>记录训练数据，追踪进步曲线，与同好交流。</p>
+      </div>
+      <div class="audience-item">
+        <h4>赛事观众</h4>
+        <p>查看比分、赛程与深度数据，提升观赛体验。</p>
+      </div>
+      <div class="audience-item">
+        <h4>体育社团</h4>
+        <p>发布活动、管理成员、共享场地信息。</p>
+      </div>
+      <div class="audience-item">
+        <h4>运动初学者</h4>
+        <p>发现场馆、入门指南与本地运动社群。</p>
+      </div>
+    </div>
+    <div class="badge-list">
+      <span class="badge">足球</span>
+      <span class="badge">篮球</span>
+      <span class="badge">跑步</span>
+      <span class="badge">游泳</span>
+      <span class="badge">羽毛球</span>
+      <span class="badge">骑行</span>
+      <span class="badge">健身</span>
+    </div>
+  </div>
+
+  <!-- 自然链接段落 —— 句子中嵌入乐鱼体育 -->
+  <div class="link-block">
+    <p>
+      如果你正在寻找一个整合赛事数据与运动资源的平台，可以了解 <a href="https://main-m-leyu.com.cn">乐鱼体育</a> 提供的信息模块。从场馆查询到个人训练记录，大多数功能无需注册即可浏览部分公开内容。
+    </p>
+  </div>
+
+  <!-- FAQ 摘要 -->
+  <div class="faq-mini">
+    <div class="faq-item">
+      <strong>需要付费吗？</strong>
+      <p>基础功能免费使用。部分高级数据导出或团队管理功能可能涉及订阅，以平台公示为准。</p>
+    </div>
+    <div class="faq-item">
+      <strong>数据来源可靠吗？</strong>
+      <p>赛事数据基于公开统计与授权合作方，场馆信息由运营方或用户贡献，平台会进行基础核验。</p>
+    </div>
+    <div class="faq-item">
+      <strong>是否支持移动端？</strong>
+      <p>响应式页面适配手机与平板，同时提供轻量级移动端快捷操作模块。</p>
+    </div>
+    <div class="faq-item">
+      <strong>可以发布自己的活动吗？</strong>
+      <p>注册用户可在指定板块创建公开或半公开活动，需遵守社区准则。</p>
+    </div>
+  </div>
+
+  <!-- 简单的一句话区域 -->
+  <div style="margin: 1.2rem 0 1.8rem; text-align: center; color: #497268; font-size: 0.9rem;">
+    信息卡片式界面 · 简洁 · 蓝绿点缀
+  </div>
+
+  <div class="footer-note">
+    乐鱼体育 · 运动信息聚合服务
+  </div>
+</div>
+</body>
+</html>
